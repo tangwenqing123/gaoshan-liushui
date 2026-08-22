@@ -56,7 +56,7 @@ const resT = decideResult([], { boya: 3, zhongziqi: 3 }, PERSONAS);
 assert(resT === "boya", "同分取先，实际=" + resT);
 
 console.log("== 8. 数据完整性 ==");
-assert(QUOTES.length >= 30, "金句 >= 30 句，实际 " + QUOTES.length);
+assert(QUOTES.length >= 100, "金句 >= 100 句，实际 " + QUOTES.length);
 assert(PERSONAS.length === 14, "人格卡 14 张（12+2），实际 " + PERSONAS.length);
 const hidden = PERSONAS.filter(p => p.hidden);
 assert(hidden.length === 2, "隐藏卡 2 张");
@@ -65,6 +65,10 @@ const badW = QUOTES.filter(q => {
   return ids.length === 0 || ids.some(pid => !PERSONAS.some(p => p.id === pid));
 });
 assert(badW.length === 0, "所有金句权重指向有效人格");
+const allIds = QUOTES.map(q => q.id);
+assert(new Set(allIds).size === allIds.length, "金句 id 全部唯一", );
+const texts = QUOTES.map(q => q.text);
+assert(new Set(texts).size === texts.length, "无重复金句文本", );
 
 console.log("\n结果: " + passed + " 通过, " + failed + " 失败");
 process.exit(failed ? 1 : 0);

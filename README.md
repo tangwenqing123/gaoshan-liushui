@@ -32,7 +32,7 @@ node tests/logic.test.js
 ├── css/style.css            # 设计令牌：治愈系 + 玻璃拟态 + 国风
 ├── js/
 │   ├── data/personas.js     # 12+2 人格卡配置
-│   ├── data/quotes.js       # 40 句金句题库（含人格权重）
+│   ├── data/quotes.js       # 105 句金句题库（12 个主题分类，含人格权重）
 │   ├── engine.js            # 选句/计分/隐藏卡引擎（可单测）
 │   ├── quote.js             # 每日一签（一言 API + 兜底）
 │   ├── poster.js            # Canvas 海报
