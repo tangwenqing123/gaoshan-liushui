@@ -56,10 +56,12 @@ const resT = decideResult([], { boya: 3, zhongziqi: 3 }, PERSONAS);
 assert(resT === "boya", "同分取先，实际=" + resT);
 
 console.log("== 8. 数据完整性 ==");
-assert(QUOTES.length >= 100, "金句 >= 100 句，实际 " + QUOTES.length);
-assert(PERSONAS.length === 14, "人格卡 14 张（12+2），实际 " + PERSONAS.length);
+assert(QUOTES.length >= 120, "金句 >= 120 句，实际 " + QUOTES.length);
+assert(PERSONAS.length === 20, "人格卡 20 张（18+2），实际 " + PERSONAS.length);
 const hidden = PERSONAS.filter(p => p.hidden);
 assert(hidden.length === 2, "隐藏卡 2 张");
+const badField = PERSONAS.filter(p => !p.career || !p.partner || !p.tagline);
+assert(badField.length === 0, "所有人格含 career/partner/tagline 深度字段");
 const badW = QUOTES.filter(q => {
   const ids = Object.keys(q.weights || {});
   return ids.length === 0 || ids.some(pid => !PERSONAS.some(p => p.id === pid));

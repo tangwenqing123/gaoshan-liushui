@@ -38,6 +38,21 @@ function renderResult(persona, picks) {
   const advice = document.getElementById("p-advice");
   advice.innerHTML = "<b>知音寄语</b><br/>" + persona.advice;
 
+  // 深度解读维度：适合的职业 / 理想的相处 / 你的口头禅
+  const prof = document.getElementById("p-profile");
+  prof.innerHTML = "";
+  [
+    ["🎯 适合的职业", persona.career],
+    ["💞 理想的相处", persona.partner],
+    ["💬 你的口头禅", persona.tagline]
+  ].forEach(function (item, i) {
+    const row = document.createElement("div");
+    row.className = "profile-row";
+    row.style.animationDelay = (0.55 + i * 0.1) + "s";
+    row.innerHTML = '<span class="profile-label">' + item[0] + '</span><span class="profile-val">' + item[1] + '</span>';
+    prof.appendChild(row);
+  });
+
   // 用户的选择痕迹
   const picksBox = document.getElementById("p-picks");
   picksBox.innerHTML = "";

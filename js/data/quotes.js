@@ -126,7 +126,43 @@ const QUOTES = [
   { id: "q102", text: "认识你自己", author: "苏格拉底", category: "自我", weights: { wangyangming: 3, zhuangzi: 2 } },
   { id: "q103", text: "我与我周旋久，宁作我", author: "《世说新语》", category: "自我", weights: { jikang: 3, zhuangzi: 2 } },
   { id: "q104", text: "不是所有的鱼，都会生活在同一片海里", author: "村上春树", category: "自我", weights: { zhuangzi: 3, lindaiyu: 2 } },
-  { id: "q105", text: "如果有来生，要做一棵树，站成永恒", author: "三毛", category: "自我", weights: { taoyuanming: 3, zhuangzi: 2 } }
+  { id: "q105", text: "如果有来生，要做一棵树，站成永恒", author: "三毛", category: "自我", weights: { taoyuanming: 3, zhuangzi: 2 } },
+  // ---- 屈原：求索 · 赤诚 ----
+  { id: "q106", text: "亦余心之所善兮，虽九死其犹未悔", author: "屈原", category: "勇气", weights: { quyuan: 3, mengzi: 2 } },
+  { id: "q107", text: "长太息以掩涕兮，哀民生之多艰", author: "屈原", category: "担当", weights: { quyuan: 3, mengzi: 2 } },
+  { id: "q108", text: "朝饮木兰之坠露兮，夕餐秋菊之落英", author: "屈原", category: "修行", weights: { quyuan: 3, taoyuanming: 2 } },
+  { id: "q109", text: "与天地兮同寿，与日月兮同光", author: "屈原", category: "豪情", weights: { quyuan: 3, zhuangzi: 2 } },
+  { id: "q110", text: "袅袅兮秋风，洞庭波兮木叶下", author: "屈原", category: "孤独", weights: { quyuan: 2, wangwei: 2 } },
+  // ---- 曹操：雄心 · 沧海 ----
+  { id: "q111", text: "老骥伏枥，志在千里；烈士暮年，壮心不已", author: "曹操", category: "豪情", weights: { caocao: 3, xinqiji: 2 } },
+  { id: "q112", text: "日月之行，若出其中；星汉灿烂，若出其里", author: "曹操", category: "豪情", weights: { caocao: 3, libai: 2 } },
+  { id: "q113", text: "对酒当歌，人生几何！譬如朝露，去日苦多", author: "曹操", category: "时间", weights: { caocao: 3, sushi: 2 } },
+  { id: "q114", text: "山不厌高，海不厌深。周公吐哺，天下归心", author: "曹操", category: "担当", weights: { caocao: 3, mengzi: 2 } },
+  { id: "q115", text: "宁我负人，毋人负我", author: "曹操", category: "自我", weights: { caocao: 3, jikang: 2 } },
+  // ---- 诸葛亮：淡泊 · 鞠躬尽瘁 ----
+  { id: "q116", text: "鞠躬尽瘁，死而后已", author: "诸葛亮", category: "担当", weights: { zhugeliang: 3, mengzi: 2 } },
+  { id: "q117", text: "非学无以广才，非志无以成学", author: "诸葛亮", category: "成长", weights: { zhugeliang: 3, wangyangming: 2 } },
+  { id: "q118", text: "夫君子之行，静以修身，俭以养德", author: "诸葛亮", category: "修行", weights: { zhugeliang: 3, taoyuanming: 2 } },
+  { id: "q119", text: "恢弘志士之气，不宜妄自菲薄", author: "诸葛亮", category: "成长", weights: { zhugeliang: 3, mengzi: 1, wangyangming: 1 } },
+  { id: "q120", text: "凤翱翔于千仞兮，非梧不栖", author: "罗贯中《三国演义》", category: "知音", weights: { zhugeliang: 3, zhongziqi: 2 } },
+  // ---- 李清照：才情 · 刚柔并济 ----
+  { id: "q121", text: "生当作人杰，死亦为鬼雄", author: "李清照", category: "豪情", weights: { liqingzhao: 3, hualan: 2 } },
+  { id: "q122", text: "九万里风鹏正举。风休住，蓬舟吹取三山去", author: "李清照", category: "自由", weights: { liqingzhao: 3, zhuangzi: 2 } },
+  { id: "q123", text: "莫道不销魂，帘卷西风，人比黄花瘦", author: "李清照", category: "深情", weights: { liqingzhao: 3, lindaiyu: 2 } },
+  { id: "q124", text: "寻寻觅觅，冷冷清清，凄凄惨惨戚戚", author: "李清照", category: "孤独", weights: { liqingzhao: 3, lindaiyu: 2 } },
+  { id: "q125", text: "何须浅碧深红色，自是花中第一流", author: "李清照", category: "自我", weights: { liqingzhao: 3, sushi: 1 } },
+  // ---- 孙悟空：大圣 · 天不怕地不怕 ----
+  { id: "q126", text: "皇帝轮流做，明年到我家", author: "《西游记》", category: "自由", weights: { sunwukong: 3, zhuangzi: 2 } },
+  { id: "q127", text: "我命由我不由天", author: "今何在《悟空传》", category: "自由", weights: { sunwukong: 3, jikang: 2 } },
+  { id: "q128", text: "大圣，此去欲何？踏南天，碎凌霄。若一去不回？便一去不回！", author: "现代（网络）", category: "勇气", weights: { sunwukong: 3, xinqiji: 2 } },
+  { id: "q129", text: "强者为尊该让我，英雄只此敢争先", author: "《西游记》", category: "豪情", weights: { sunwukong: 3, mengzi: 2 } },
+  { id: "q130", text: "我要这铁棒有何用，我有这变化又如何", author: "戴荃《悟空》", category: "自我", weights: { sunwukong: 3, jikang: 2 } },
+  // ---- 花木兰：巾帼 · 担当 ----
+  { id: "q131", text: "万里赴戎机，关山度若飞", author: "《木兰诗》", category: "豪情", weights: { hualan: 3, xinqiji: 2 } },
+  { id: "q132", text: "将军百战死，壮士十年归", author: "《木兰诗》", category: "勇气", weights: { hualan: 3, mengzi: 2 } },
+  { id: "q133", text: "愿为市鞍马，从此替爷征", author: "《木兰诗》", category: "担当", weights: { hualan: 3, mengzi: 1, zhugeliang: 1 } },
+  { id: "q134", text: "雄兔脚扑朔，雌兔眼迷离；双兔傍地走，安能辨我是雄雌", author: "《木兰诗》", category: "自我", weights: { hualan: 3, zhuangzi: 1 } },
+  { id: "q135", text: "谁说女子不如男", author: "豫剧《花木兰》", category: "自我", weights: { hualan: 3, liqingzhao: 2 } }
 ];
 
 if (typeof module !== "undefined") module.exports = { QUOTES };
