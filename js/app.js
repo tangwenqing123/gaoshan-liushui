@@ -179,5 +179,8 @@
       document.getElementById("poster-modal").classList.remove("open");
     });
     document.getElementById("btn-debug-all").addEventListener("click", renderAllPersonas);
+
+    // 初始激活首页视图（兜底：即使 HTML 未带 active 也可靠）
+    showView("home");
   });
 })();
