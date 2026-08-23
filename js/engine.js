@@ -80,6 +80,10 @@ function createSession(quotes, personas, opts) {
     },
     getPicks() { return picks.slice(); },
     getScores() { return Object.assign({}, scores); },
+    getDimensions() {
+      if (typeof calcDimensions === "function") return calcDimensions(picks);
+      return { "才情": 50, "旷达": 50, "深情": 50, "孤高": 50, "谋略": 50, "通透": 50 };
+    },
     result() { return decideResult(picks, scores, personas); }
   };
 }
