@@ -89,21 +89,21 @@ function drawRadar(canvas, dims, colors, names) {
     const x = cx + r * Math.cos(angle);
     const y = cy + r * Math.sin(angle);
     ctx.beginPath();
-    ctx.arc(x, y, 3.5, 0, Math.PI * 2);
+    ctx.arc(x, y, 4.5, 0, Math.PI * 2);
     ctx.fillStyle = "#fff";
     ctx.fill();
     ctx.strokeStyle = c1;
-    ctx.lineWidth = 2;
+    ctx.lineWidth = 2.5;
     ctx.stroke();
   }
 
   // 5. 画标签（维度名 + 分数）
-  ctx.font = "12px -apple-system, BlinkMacSystemFont, 'PingFang SC', sans-serif";
+  ctx.font = "14px -apple-system, BlinkMacSystemFont, 'PingFang SC', sans-serif";
   ctx.textAlign = "center";
   ctx.textBaseline = "middle";
   for (let i = 0; i < n; i++) {
     const angle = (Math.PI * 2 * i / n) - Math.PI / 2;
-    const labelR = R + 18;
+    const labelR = R + 22;
     const x = cx + labelR * Math.cos(angle);
     const y = cy + labelR * Math.sin(angle);
     const score = dims[dimNames[i]] || 0;
