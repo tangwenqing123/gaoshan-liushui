@@ -5,7 +5,7 @@
 (function () {
   "use strict";
 
-  var state = { view: "home", session: null, roundIdx: 0, persona: null, picks: [], dims: null };
+  var state = { view: "home", session: null, roundIdx: 0, persona: null, picks: [] };
   var ROUNDS = 5, PER = 6;
 
   /* ---------- 埋点（v1 localStorage 计数，匿名） ---------- */
@@ -31,7 +31,6 @@
     state.session = createSession(QUOTES, PERSONAS, { rounds: ROUNDS, per: PER });
     state.roundIdx = 0;
     state.picks = [];
-    state.dims = null;
     track("test_start");
     renderRound();
     showView("test");
@@ -73,16 +72,14 @@
     var pid = state.session.result();
     state.persona = PERSONAS.find(function (p) { return p.id === pid; });
     state.picks = state.session.getPicks();
-    // 获取六维数据
-    state.dims = state.session.getDimensions ? state.session.getDimensions() : null;
     track("test_complete");
     track("persona_" + pid);
-    showResult(state.persona, state.picks, state.dims);
+    showResult(state.persona, state.picks);
   }
 
   /* ---------- 结果页 ---------- */
-  function showResult(persona, picks, dims) {
-    renderResult(persona, picks, dims);
+  function showResult(persona, picks) {
+    renderResult(persona, picks);
     var debugRow = document.getElementById("debug-row");
     if (debugRow) debugRow.style.display = getParam("debug") ? "block" : "none";
     showView("result");
