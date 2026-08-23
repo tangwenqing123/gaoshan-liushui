@@ -28,6 +28,11 @@ function drawRadar(canvas, dims, colors, names) {
   const c1 = (colors && colors.c1) || "#6b8f71";
   const c2 = (colors && colors.c2) || "#a3c585";
 
+  // 相对刻度：最大值 = max(用户最高分 + 15, 50)，避免低分图形集中在中心
+  const scores = dimNames.map(d => dims[d] || 0);
+  const maxScore = Math.max.apply(null, scores);
+  const maxValue = Math.max(maxScore + 15, 50);
+
   ctx.clearRect(0, 0, W, H);
 
   // 1. 画网格（4层）
@@ -63,7 +68,7 @@ function drawRadar(canvas, dims, colors, names) {
   for (let i = 0; i < n; i++) {
     const angle = (Math.PI * 2 * i / n) - Math.PI / 2;
     const score = dims[dimNames[i]] || 0;
-    const r = R * Math.min(100, score) / 100;
+    const r = R * Math.min(maxValue, score) / maxValue;
     const x = cx + r * Math.cos(angle);
     const y = cy + r * Math.sin(angle);
     if (i === 0) ctx.moveTo(x, y);
@@ -85,7 +90,7 @@ function drawRadar(canvas, dims, colors, names) {
   for (let i = 0; i < n; i++) {
     const angle = (Math.PI * 2 * i / n) - Math.PI / 2;
     const score = dims[dimNames[i]] || 0;
-    const r = R * Math.min(100, score) / 100;
+    const r = R * Math.min(maxValue, score) / maxValue;
     const x = cx + r * Math.cos(angle);
     const y = cy + r * Math.sin(angle);
     ctx.beginPath();

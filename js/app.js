@@ -32,6 +32,8 @@
     state.roundIdx = 0;
     state.picks = [];
     state.dims = null;
+    // 每次新测试清除解锁状态，确保付费墙重新出现
+    try { localStorage.removeItem("gsls_unlocked"); } catch(e) {}
     track("test_start");
     renderRound();
     showView("test");
