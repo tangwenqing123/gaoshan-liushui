@@ -1,0 +1,473 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <title>高山流水 · 遇知音｜金句人格测试</title>
+  <meta name="description" content="2 分钟，用金句遇见你灵魂里的知音。选 5 句最戳心的金句，测出你的古典知音人格。" />
+  <meta name="theme-color" content="#faf6ef" />
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🏔️</text></svg>" />
+  <link rel="stylesheet" href="css/style.css" />
+  <style>
+    /* ===== 六维雷达图模块 ===== */
+    .result-section {
+      background: #fff;
+      border-radius: 14px;
+      padding: 20px 18px;
+      margin-bottom: 14px;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.04);
+      position: relative;
+    }
+    .result-section .section-tag {
+      display: inline-block;
+      background: #e8f0e9;
+      color: #6b8f71;
+      font-size: 11px;
+      padding: 2px 8px;
+      border-radius: 8px;
+      margin-left: 6px;
+      font-weight: 600;
+      vertical-align: middle;
+    }
+    .result-section .section-tag.paid {
+      background: #f5efe6;
+      color: #b8956a;
+    }
+    .result-section h3 {
+      font-size: 16px;
+      font-weight: 700;
+      color: #333;
+      margin-bottom: 14px;
+      display: flex;
+      align-items: center;
+    }
+    .radar-wrap {
+      text-align: center;
+      margin-bottom: 12px;
+    }
+    .radar-wrap canvas {
+      max-width: 260px;
+      width: 100%;
+      height: auto;
+    }
+    .dim-insights {
+      margin-top: 10px;
+    }
+    .dim-insight-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 8px;
+      padding: 8px 0;
+      border-bottom: 1px solid #f5f3f0;
+      font-size: 13px;
+      line-height: 1.6;
+    }
+    .dim-insight-item:last-child { border-bottom: none; }
+    .dim-insight-item .dim-icon { font-size: 16px; flex-shrink: 0; }
+    .dim-insight-item .dim-name {
+      font-weight: 600;
+      color: #555;
+      margin-right: 4px;
+    }
+    .dim-insight-item .dim-score {
+      color: #6b8f71;
+      font-weight: 600;
+      font-size: 12px;
+    }
+    .dim-insight-item .dim-desc {
+      color: #888;
+      font-size: 12px;
+      margin-top: 2px;
+    }
+
+    /* ===== 付费墙 ===== */
+    .paywall {
+      background: #fff;
+      border-radius: 16px 16px 0 0;
+      padding: 28px 20px 24px;
+      margin: 0 -18px -14px;
+      position: relative;
+      box-shadow: 0 -4px 20px rgba(0,0,0,0.06);
+      text-align: center;
+    }
+    .paywall::before {
+      content: '';
+      position: absolute;
+      top: 8px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 36px;
+      height: 3px;
+      background: #e0ddd8;
+      border-radius: 2px;
+    }
+    .pw-lock { font-size: 34px; margin-bottom: 10px; }
+    .pw-title {
+      font-size: 19px;
+      font-weight: 700;
+      color: #2c2c2c;
+      margin-bottom: 8px;
+      line-height: 1.4;
+    }
+    .pw-subtitle {
+      font-size: 13px;
+      color: #888;
+      margin-bottom: 16px;
+      line-height: 1.7;
+    }
+    .pw-modules {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      justify-content: center;
+      margin-bottom: 18px;
+    }
+    .pw-module {
+      background: #f0ebf7;
+      color: #8b6fbf;
+      padding: 5px 10px;
+      border-radius: 12px;
+      font-size: 11px;
+      font-weight: 600;
+    }
+    .pw-price-row { margin-bottom: 6px; }
+    .pw-price {
+      font-size: 32px;
+      font-weight: 800;
+      color: #8b6fbf;
+    }
+    .pw-price .pw-currency { font-size: 18px; }
+    .pw-original {
+      font-size: 13px;
+      color: #bbb;
+      text-decoration: line-through;
+      margin-left: 8px;
+    }
+    .pw-trust {
+      font-size: 11px;
+      color: #aaa;
+      margin-bottom: 16px;
+    }
+    .pw-btn {
+      width: 100%;
+      background: linear-gradient(135deg, #8b6fbf, #b89de0);
+      color: #fff;
+      border: none;
+      padding: 14px;
+      border-radius: 10px;
+      font-size: 16px;
+      font-weight: 700;
+      cursor: pointer;
+      box-shadow: 0 4px 12px rgba(139,111,191,0.3);
+      transition: transform 0.1s;
+    }
+    .pw-btn:active { transform: scale(0.98); }
+    .pw-alt {
+      text-align: center;
+      margin-top: 14px;
+      font-size: 12px;
+      color: #999;
+    }
+    .pw-alt a {
+      color: #6b8f71;
+      text-decoration: none;
+      font-weight: 600;
+    }
+
+    /* 付费内容（解锁后显示） */
+    .paid-content { display: none; }
+    .paid-content.unlocked { display: block; animation: fadeIn 0.5s ease; }
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    .paid-content .content-block {
+      margin-bottom: 14px;
+      font-size: 14px;
+      line-height: 1.8;
+      color: #444;
+    }
+    .paid-content .content-block h4 {
+      font-size: 15px;
+      color: #8b6fbf;
+      margin-bottom: 8px;
+      font-weight: 700;
+    }
+    .paid-content .content-block p { margin-bottom: 8px; }
+    .paid-content .trait-item {
+      background: #faf8ff;
+      border-radius: 10px;
+      padding: 12px 14px;
+      margin-bottom: 10px;
+      border-left: 3px solid #8b6fbf;
+    }
+    .paid-content .trait-item .trait-name {
+      font-weight: 700;
+      color: #555;
+      margin-bottom: 4px;
+      font-size: 14px;
+    }
+    .paid-content .trait-item .trait-desc {
+      font-size: 13px;
+      color: #777;
+      line-height: 1.6;
+    }
+
+    /* 付款模态框 */
+    .paywall-modal { background: rgba(0,0,0,0.5); }
+    .paywall-modal-inner {
+      background: #fff;
+      border-radius: 16px;
+      padding: 28px 24px;
+      max-width: 360px;
+      width: 90%;
+      position: relative;
+      text-align: center;
+    }
+    .paywall-modal-close {
+      position: absolute;
+      top: 12px;
+      right: 16px;
+      background: none;
+      border: none;
+      font-size: 24px;
+      color: #ccc;
+      cursor: pointer;
+    }
+    .paywall-modal-title {
+      font-size: 20px;
+      font-weight: 700;
+      color: #333;
+      margin-bottom: 8px;
+    }
+    .paywall-modal-price {
+      font-size: 28px;
+      font-weight: 800;
+      color: #8b6fbf;
+      margin-bottom: 20px;
+    }
+    .paywall-modal-price span {
+      font-size: 14px;
+      color: #bbb;
+      text-decoration: line-through;
+      font-weight: 400;
+    }
+    .paywall-modal-step {
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+      text-align: left;
+      margin-bottom: 14px;
+      font-size: 13px;
+      line-height: 1.6;
+      color: #555;
+    }
+    .paywall-step-num {
+      width: 24px;
+      height: 24px;
+      background: #8b6fbf;
+      color: #fff;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 13px;
+      font-weight: 700;
+      flex-shrink: 0;
+    }
+    .paywall-modal-btn {
+      width: 100%;
+      background: linear-gradient(135deg, #8b6fbf, #b89de0);
+      color: #fff;
+      border: none;
+      padding: 14px;
+      border-radius: 10px;
+      font-size: 15px;
+      font-weight: 700;
+      cursor: pointer;
+      margin-top: 10px;
+    }
+    .paywall-modal-note {
+      font-size: 11px;
+      color: #aaa;
+      margin-top: 12px;
+    }
+    .paywall-modal-desc {
+      font-size: 13px;
+      color: #666;
+      line-height: 1.7;
+      margin-bottom: 16px;
+      text-align: left;
+    }
+    .paywall-share-tip {
+      background: #faf8ff;
+      border-radius: 10px;
+      padding: 12px 14px;
+      font-size: 12px;
+      color: #777;
+      line-height: 1.7;
+      margin-bottom: 14px;
+      text-align: left;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ===== 背景装饰 ===== -->
+  <div class="bg-decor" aria-hidden="true">
+    <div class="blob blob-1"></div>
+    <div class="blob blob-2"></div>
+  </div>
+
+  <!-- ===== 首页 ===== -->
+  <section class="view active" id="view-home">
+    <div class="hero">
+      <svg class="mountain" viewBox="0 0 400 120" aria-hidden="true">
+        <path d="M0 120 L80 40 L140 95 L210 25 L280 90 L340 45 L400 100 L400 120 Z" fill="url(#mg)" opacity=".55"/>
+        <path d="M0 120 L120 70 L190 110 L260 60 L330 105 L400 75 L400 120 Z" fill="url(#mg2)" opacity=".45"/>
+        <defs>
+          <linearGradient id="mg" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0" stop-color="#6b8f71"/><stop offset="1" stop-color="#3a5a6e"/>
+          </linearGradient>
+          <linearGradient id="mg2" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0" stop-color="#8fa98f"/><stop offset="1" stop-color="#5b7d8f"/>
+          </linearGradient>
+        </defs>
+      </svg>
+      <p class="hero-kicker">金句 · 人格 · 遇知音</p>
+      <h1 class="hero-title">高山<span>流</span>水</h1>
+      <p class="hero-sub">选 5 句最戳心的金句<br/>遇见你灵魂里的知音</p>
+      <button class="btn btn-primary" id="btn-start">开始测试<span class="btn-arrow">→</span></button>
+      <button class="btn btn-ghost" id="btn-quote-home">🎐 今日一签</button>
+      <p class="hero-note">约 2 分钟 · 12+2 位古典知音 · 免费</p>
+    </div>
+  </section>
+
+  <!-- ===== 测试页 ===== -->
+  <section class="view" id="view-test">
+    <header class="topbar">
+      <button class="icon-btn" id="btn-test-home" title="返回首页">⌂</button>
+      <div class="progress-track"><div class="progress-fill" id="progress-fill"></div></div>
+      <span class="round-label" id="round-label">第 1 / 5 轮</span>
+    </header>
+    <div class="test-body">
+      <p class="test-tip" id="test-tip">哪一句，最触动你？</p>
+      <div class="card-list" id="card-list"></div>
+      <button class="btn btn-ghost btn-skip" id="btn-skip">🎲 随缘选一句</button>
+    </div>
+  </section>
+
+  <!-- ===== 结果页 ===== -->
+  <section class="view" id="view-result">
+    <div class="result-wrap" id="result-wrap">
+      <p class="result-kicker">你的灵魂知音是</p>
+
+      <!-- 模块①：知音画像（免费） -->
+      <div class="p-card" id="p-card">
+        <div class="p-emoji" id="p-emoji">🎼</div>
+        <h2 class="p-name" id="p-name">伯牙</h2>
+        <p class="p-title" id="p-title">琴心洞察者</p>
+        <p class="p-allusion" id="p-allusion">伯牙善鼓琴，高山流水遇知音</p>
+        <p class="p-quote" id="p-quote">「相识满天下，知心能几人」</p>
+      </div>
+      <div class="p-desc" id="p-desc"></div>
+      <div class="p-advice" id="p-advice"></div>
+
+      <!-- 模块②：六维命格（免费） -->
+      <div class="result-section" id="section-dimensions">
+        <h3>🧭 六维命格 <span class="section-tag">免费</span></h3>
+        <div class="radar-wrap">
+          <canvas id="radar-canvas"></canvas>
+        </div>
+        <div class="dim-insights" id="dim-insights"></div>
+      </div>
+
+      <!-- 付费墙 -->
+      <div id="paywall-container"></div>
+
+      <!-- 模块③：性格优势（付费） -->
+      <div class="result-section paid-content" id="section-strengths">
+        <h3>✨ 性格优势 <span class="section-tag paid">已解锁</span></h3>
+        <div id="strengths-content"></div>
+      </div>
+
+      <!-- 模块④：隐藏弱点（付费） -->
+      <div class="result-section paid-content" id="section-weaknesses">
+        <h3>🌑 隐藏弱点 <span class="section-tag paid">已解锁</span></h3>
+        <div id="weaknesses-content"></div>
+      </div>
+
+      <!-- 模块⑤：处世之道（付费） -->
+      <div class="result-section paid-content" id="section-life">
+        <h3>🧭 处世之道 <span class="section-tag paid">已解锁</span></h3>
+        <div id="life-content"></div>
+      </div>
+
+      <!-- 模块⑥：翻盘心法（付费） -->
+      <div class="result-section paid-content" id="section-breakthrough">
+        <h3>🔥 翻盘心法 <span class="section-tag paid">已解锁</span></h3>
+        <div id="breakthrough-content"></div>
+      </div>
+
+      <!-- 你选择的金句 -->
+      <div class="p-picks" id="p-picks"></div>
+
+      <div class="result-actions">
+        <button class="btn btn-primary" id="btn-poster">🖼️ 生成分享海报</button>
+        <button class="btn btn-ghost" id="btn-share">📤 分享</button>
+        <button class="btn btn-ghost" id="btn-retest">🔄 再测一次</button>
+      </div>
+      <div class="debug-row" id="debug-row" style="display:none">
+        <button class="btn btn-ghost btn-skip" id="btn-debug-all">🧪 查看全部人格</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== 每日一签 ===== -->
+  <section class="view" id="view-quote">
+    <header class="topbar">
+      <button class="icon-btn" id="btn-quote-back" title="返回">←</button>
+      <span class="round-label">今日一签</span>
+      <span></span>
+    </header>
+    <div class="quote-body">
+      <div class="quote-card" id="quote-card">
+        <p class="quote-mark">「</p>
+        <p class="quote-text" id="quote-text">正在求签…</p>
+        <p class="quote-author" id="quote-author"></p>
+        <p class="quote-mark quote-mark-end">」</p>
+      </div>
+      <button class="btn btn-ghost" id="btn-quote-refresh">🎲 换一句</button>
+      <button class="btn btn-primary" id="btn-quote-share">📤 分享这签</button>
+    </div>
+  </section>
+
+  <!-- ===== 海报弹窗 ===== -->
+  <div class="modal" id="poster-modal">
+    <div class="modal-inner">
+      <img id="poster-img" alt="分享海报" />
+      <div class="modal-actions">
+        <a class="btn btn-primary" id="poster-download" download="gaoshan-liushui.png">⬇️ 保存海报</a>
+        <button class="btn btn-ghost" id="poster-close">关闭</button>
+      </div>
+    </div>
+  </div>
+
+  <footer class="site-footer">
+    <p>高山流水 · 遇知音 —— 金句人格测试</p>
+    <p class="disclaimer">本测试仅供自我探索与娱乐，不构成任何医疗诊断或心理评估。</p>
+  </footer>
+
+  <script src="js/data/personas.js"></script>
+  <script src="js/data/quotes.js"></script>
+  <script src="js/data/persona-dimensions.js"></script>
+  <script src="js/engine.js"></script>
+  <script src="js/radar.js"></script>
+  <script src="js/paywall.js"></script>
+  <script src="js/quote.js"></script>
+  <script src="js/poster.js"></script>
+  <script src="js/result.js"></script>
+  <script src="js/app.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/qrcodejs@1.0.0/qrcode.min.js" defer></script>
+</body>
+</html>
